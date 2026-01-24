@@ -384,7 +384,13 @@ while i<overs and wicket<players and run_diff>0:
                     print(bowling_team_nonstriker,' :',bowling_team_nonstriker_runs)
                     print("Overs: ",i,".",j)
                     print("Team needs to score ",run_diff)
-    i=i+1             
+    i=i+1
+if run_diff>0:
+    print(batting_team," won the match by", run_diff," runs")
+elif run_diff==0:
+    print("Match Tied")
+else:
+    print(bowling_team," won the match by", ((players)-(wicket)), "wickets")             
                     
 
 
