@@ -1,5 +1,20 @@
 team1=input("Enter Home Team: ")
 team2=input("Enter Visiting Team: ")
+team1_squad=[]
+team2_squad=[]
+players=int(input("Number of Players per team: "))
+i=0
+while i<players:
+    name=input("Enter the player Name of: ",team1)
+    pos=int(input("Enter his batting position: "))
+    team1_squad.insert(pos,name)
+    i=i+1
+i=0
+while i<players:
+    name=input("Enter the player Name of: ",team2)
+    pos=int(input("Enter his batting position: "))
+    team2_squad.insert(pos,name)
+    i=i+1
 print("---Toss---")
 toss_winner=input("Toss Winner: ")
 if toss_winner.upper()==team1.upper():
@@ -19,7 +34,6 @@ else:
         batting_team=team1
         bowling_team=team2
 overs=int(input("Enter Number Of Overs to be played: "))
-players=int(input("Number of Players per team: "))
 batting_team_striker=input("Enter Striker: ")
 batting_team_nonstriker=input("Enter Non-Striker: ")
 i=0
