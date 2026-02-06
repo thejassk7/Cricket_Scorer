@@ -1,15 +1,36 @@
 team1=input("Enter Home Team: ")
 team2=input("Enter Visiting Team: ")
+team1_squad=[]
+team2_squad=[]
+players=int(input("Number of Players per team: "))
+i=0
+while i<players:
+    name=input("Enter the player Name of: ",team1)
+    pos=int(input("Enter his batting position: "))
+    team1_squad.insert(pos-1,name)
+    i=i+1
+i=0
+while i<players:
+    name=input("Enter the player Name of: ",team2)
+    pos=int(input("Enter his batting position: "))
+    team2_squad.insert(pos,name)
+    i=i+1
+batting_team_squad=[]
+bowling_team_squad=[]
 print("---Toss---")
 toss_winner=input("Toss Winner: ")
 if toss_winner.upper()==team1.upper():
     decision=input("Bat or Bowl First: ")
     if decision.upper()=='BAT':
         batting_team=team1
+        batting_team_squad=team1_squad
         bowling_team=team2
+        bowling_team_squad=team2_squad
     else:
         batting_team=team2
+        batting_team_squad=team2_squad
         bowling_team=team1
+        bowling_team_squad=team2_squad
 else:
     decision=input("Bat or Bowl First: ")
     if decision.upper()=='BAT':
@@ -19,11 +40,11 @@ else:
         batting_team=team1
         bowling_team=team2
 overs=int(input("Enter Number Of Overs to be played: "))
-players=int(input("Number of Players per team: "))
-batting_team_striker=input("Enter Striker: ")
-batting_team_nonstriker=input("Enter Non-Striker: ")
+batting_team_striker=batting_team_squad[0]
+batting_team_nonstriker=batting_team_squad[1]
 i=0
-j=1
+j=0
+batting_order=1
 wicket=0
 batting_team_runs=0
 batting_team_striker_runs=0
@@ -102,26 +123,31 @@ while i<overs and wicket<players:
             mode_wicket=input("Mode of Wicket (Bowled/Caught/Run Out): ")
             if mode_wicket.upper=='BOWLED' or mode_wicket.upper()=='CAUGHT':
                 wicket=wicket+1
+                batting_order=batting_order+1
                 print("Runs: ",batting_team_runs,"/",wicket)
-                print("Batsman: ",batting_team_striker, "Runs: ",batting_team_runs)
-                batting_team_runs=0
-                batting_team_striker=input("Enter New Batsman")
+                print("Batsman: ",batting_team_striker, "Runs: ",batting_team_striker_runs)
+                batting_team_striker_runs=0
+                if batting_order<players:
+                    batting_team_striker=batting_team_squad[batting_order]
                 j=j+1
                 print("Overs: ",i,".",j)
             else:
                 wicket=wicket+1
+                batting_order=batting_order+1
                 print("Runs: ",batting_team_runs,"/",wicket)
                 player_out=input("Who got run-out: (Striker/Non-Striker):")
                 if player_out=='Striker':
                     print("Batsman: ",batting_team_striker, "Runs: ",batting_team_striker_runs)
                     batting_team_striker_runs=0
-                    batting_team_striker=input("Enter New Batsman")
+                    if batting_order<players:
+                        batting_team_striker=batting_team_squad[batting_order]
                     j=j+1
                     print("Overs: ",i,".",j)
                 else:
                     print("Batsman: ",batting_team_nonstriker, "Runs: ",batting_team_nonstriker_runs)
                     batting_team_nonstriker_runs=0
-                    batting_team_nonstriker=input("Enter New Batsman")
+                    if batting_order<players:
+                        batting_team_nonstriker=batting_team_squad[batting_order]
                     j=j+1
                     print("Overs: ",i,".",j)
         else:
@@ -194,11 +220,12 @@ while i<overs and wicket<players:
                     print(batting_team_nonstriker,' :',batting_team_nonstriker_runs)
                     print("Overs: ",i,".",j)
     i=i+1            
-bowling_team_striker=input("Enter Striker: ")
-bowling_team_nonstriker=input("Enter Non-Striker: ")
+bowling_team_striker=bowling_team_squad[0]
+bowling_team_nonstriker=bowling_team_squad[1]
 i=0
 j=1
 wicket=0
+batting_order=1
 bowling_team_runs=0
 bowling_team_striker_runs=0
 bowling_team_nonstriker_runs=0
@@ -283,28 +310,33 @@ while i<overs and wicket<players and run_diff>0:
             mode_wicket=input("Mode of Wicket (Bowled/Caught/Run Out): ")
             if mode_wicket.upper=='BOWLED' or mode_wicket.upper()=='CAUGHT':
                 wicket=wicket+1
+                batting_order=batting_order+1
                 print("Runs: ",bowling_team_runs,"/",wicket)
                 print("Batsman: ",bowling_team_striker, "Runs: ",bowling_team_runs)
-                bowling_team_runs=0
-                bowling_team_striker=input("Enter New Batsman")
+                bowling_team_striker_runs=0
+                if batting_order<players:
+                    bowling_team_striker=bowling_team_squad[batting_order]
                 j=j+1
                 print("Overs: ",i,".",j)
                 print("Team needs to score ",run_diff)
             else:
                 wicket=wicket+1
+                batting_order=batting_order+1
                 print("Runs: ",bowling_team_runs,"/",wicket)
                 player_out=input("Who got run-out: (Striker/Non-Striker):")
                 if player_out=='Striker':
                     print("Batsman: ",bowling_team_striker, "Runs: ",bowling_team_striker_runs)
                     bowling_team_striker_runs=0
-                    bowling_team_striker=input("Enter New Batsman")
+                    if batting_order<players:
+                        bowling_team_striker=bowling_team_squad[batting_order]
                     j=j+1
                     print("Overs: ",i,".",j)
                     print("Team needs to score ",run_diff)
                 else:
                     print("Batsman: ",bowling_team_nonstriker, "Runs: ",bowling_team_nonstriker_runs)
                     bowling_team_nonstriker_runs=0
-                    bowling_team_nonstriker=input("Enter New Batsman")
+                    if batting_order<players:
+                        bowling_team_nonstriker=bowling_team_squad[batting_order]
                     j=j+1
                     print("Overs: ",i,".",j)
                     print("Team needs to score ",run_diff)
