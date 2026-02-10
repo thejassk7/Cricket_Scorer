@@ -17,6 +17,8 @@ while i<players:
     i=i+1
 batting_team_squad=[]
 bowling_team_squad=[]
+batting_team_score={}
+bowling_team_score={}
 print("---Toss---")
 toss_winner=input("Toss Winner: ")
 if toss_winner.upper()==team1.upper():
@@ -49,6 +51,8 @@ wicket=0
 batting_team_runs=0
 batting_team_striker_runs=0
 batting_team_nonstriker_runs=0
+batting_team_score[batting_team_squad[0]]=0
+batting_team_score[batting_team_squad[1]]=0
 while i<overs and wicket<players:
     j=0
     while j<6 and wicket<players:
@@ -126,6 +130,7 @@ while i<overs and wicket<players:
                 batting_order=batting_order+1
                 print("Runs: ",batting_team_runs,"/",wicket)
                 print("Batsman: ",batting_team_striker, "Runs: ",batting_team_striker_runs)
+                batting_team_score[batting_team_striker]=batting_team_striker_runs
                 batting_team_striker_runs=0
                 if batting_order<players:
                     batting_team_striker=batting_team_squad[batting_order]
@@ -138,6 +143,7 @@ while i<overs and wicket<players:
                 player_out=input("Who got run-out: (Striker/Non-Striker):")
                 if player_out=='Striker':
                     print("Batsman: ",batting_team_striker, "Runs: ",batting_team_striker_runs)
+                    batting_team_score[batting_team_striker]=batting_team_striker_runs
                     batting_team_striker_runs=0
                     if batting_order<players:
                         batting_team_striker=batting_team_squad[batting_order]
@@ -145,6 +151,7 @@ while i<overs and wicket<players:
                     print("Overs: ",i,".",j)
                 else:
                     print("Batsman: ",batting_team_nonstriker, "Runs: ",batting_team_nonstriker_runs)
+                    batting_team_score[batting_team_nonstriker]=batting_team_nonstriker_runs
                     batting_team_nonstriker_runs=0
                     if batting_order<players:
                         batting_team_nonstriker=batting_team_squad[batting_order]
@@ -219,7 +226,11 @@ while i<overs and wicket<players:
                     print(batting_team_striker,' :',batting_team_striker_runs)
                     print(batting_team_nonstriker,' :',batting_team_nonstriker_runs)
                     print("Overs: ",i,".",j)
-    i=i+1            
+    i=i+1
+batting_team_score[batting_team_striker]=batting_team_striker_runs
+batting_team_score[batting_team_nonstriker]=batting_team_nonstriker_runs
+print(batting_team,"scored ",batting_team_runs)
+print(batting_team_score)       
 bowling_team_striker=bowling_team_squad[0]
 bowling_team_nonstriker=bowling_team_squad[1]
 i=0
@@ -312,7 +323,8 @@ while i<overs and wicket<players and run_diff>0:
                 wicket=wicket+1
                 batting_order=batting_order+1
                 print("Runs: ",bowling_team_runs,"/",wicket)
-                print("Batsman: ",bowling_team_striker, "Runs: ",bowling_team_runs)
+                print("Batsman: ",bowling_team_striker, "Runs: ",bowling_team_striker_runs)
+                batting_team_score[bowling_team_striker]=bowling_team_striker_runs
                 bowling_team_striker_runs=0
                 if batting_order<players:
                     bowling_team_striker=bowling_team_squad[batting_order]
@@ -417,12 +429,14 @@ while i<overs and wicket<players and run_diff>0:
                     print("Overs: ",i,".",j)
                     print("Team needs to score ",run_diff)
     i=i+1
+print("Batting team Score Card: ",batting_team_score)
+print("Bowling team Scorecard: ",bowling_team_score)
 if run_diff>0:
     print(batting_team," won the match by", run_diff," runs")
 elif run_diff==0:
     print("Match Tied")
 else:
-    print(bowling_team," won the match by", ((players)-(wicket)), "wickets")             
+    print(bowling_team," won the match by", ((players-1)-(wicket)), "wickets")             
                     
 
 
